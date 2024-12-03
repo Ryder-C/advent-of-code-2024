@@ -19,7 +19,7 @@ pub fn input_generator(input: &str) -> (Vec<i32>, Vec<i32>) {
 }
 
 #[aoc(day1, part1)]
-fn part1(list: &(Vec<i32>, Vec<i32>)) -> i32 {
+pub fn part1(list: &(Vec<i32>, Vec<i32>)) -> i32 {
     let mut left_list = list.0.clone();
     let mut right_list = list.1.clone();
 
@@ -34,7 +34,7 @@ fn part1(list: &(Vec<i32>, Vec<i32>)) -> i32 {
 }
 
 #[aoc(day1, part2)]
-fn part2(list: &(Vec<i32>, Vec<i32>)) -> i32 {
+pub fn part2(list: &(Vec<i32>, Vec<i32>)) -> i32 {
     let mut freqs = HashMap::new();
     for n in list.1.iter() {
         *freqs.entry(n).or_insert(0) += 1;

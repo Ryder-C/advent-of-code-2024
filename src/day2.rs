@@ -12,7 +12,7 @@ pub fn input_generator(input: &str) -> Vec<Vec<i32>> {
 }
 
 #[aoc(day2, part1)]
-fn part_1(data: &Vec<Vec<i32>>) -> i32 {
+pub fn part1(data: &Vec<Vec<i32>>) -> i32 {
     let mut ans = 0;
     for line in data {
         let increasing = line.iter().enumerate().skip(1).all(|(i, x)| {
@@ -32,7 +32,7 @@ fn part_1(data: &Vec<Vec<i32>>) -> i32 {
 
 // Probably a much faster way to do this
 #[aoc(day2, part2)]
-fn part_2(data: &Vec<Vec<i32>>) -> i32 {
+pub fn part2(data: &Vec<Vec<i32>>) -> i32 {
     let mut ans = 0;
 
     for line in data {
