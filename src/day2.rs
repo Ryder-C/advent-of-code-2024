@@ -17,11 +17,11 @@ fn part_1(data: &Vec<Vec<i32>>) -> i32 {
     for line in data {
         let increasing = line.iter().enumerate().skip(1).all(|(i, x)| {
             let diff = (*x - line[i - 1]).abs();
-            *x > line[i - 1] && diff >= 1 && diff <= 3
+            *x > line[i - 1] && (1..=3).contains(&diff)
         });
         let decreasing = line.iter().enumerate().skip(1).all(|(i, x)| {
             let diff = (*x - line[i - 1]).abs();
-            *x < line[i - 1] && diff >= 1 && diff <= 3
+            *x < line[i - 1] && (1..=3).contains(&diff)
         });
         if increasing || decreasing {
             ans += 1;
@@ -39,11 +39,11 @@ fn part_2(data: &Vec<Vec<i32>>) -> i32 {
         let is_safe = |line: &[i32]| -> bool {
             let increasing = line.iter().enumerate().skip(1).all(|(i, &x)| {
                 let diff = (x - line[i - 1]).abs();
-                x > line[i - 1] && diff >= 1 && diff <= 3
+                x > line[i - 1] && (1..=3).contains(&diff)
             });
             let decreasing = line.iter().enumerate().skip(1).all(|(i, &x)| {
                 let diff = (x - line[i - 1]).abs();
-                x < line[i - 1] && diff >= 1 && diff <= 3
+                x < line[i - 1] && (1..=3).contains(&diff)
             });
             increasing || decreasing
         };
