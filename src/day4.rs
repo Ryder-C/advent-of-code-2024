@@ -4,7 +4,7 @@ pub fn input_generator(input: &str) -> Vec<Vec<char>> {
 }
 
 #[aoc(day4, part1)]
-pub fn part1(grid: &Vec<Vec<char>>) -> i32 {
+pub fn part1(grid: &[Vec<char>]) -> i32 {
     let directions = [
         (-1, 0),
         (-1, 1),
@@ -50,7 +50,7 @@ pub fn part1(grid: &Vec<Vec<char>>) -> i32 {
 }
 
 #[aoc(day4, part2)]
-pub fn part2(grid: &Vec<Vec<char>>) -> i32 {
+pub fn part2(grid: &[Vec<char>]) -> i32 {
     let n = grid.len();
     let m = grid[0].len();
     let mut count = 0;
