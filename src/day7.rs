@@ -28,7 +28,6 @@ pub fn part1(input: &[(i64, Vec<i64>)]) -> i64 {
         }
 
         let n_ops = nums.len() - 1;
-        let mut possible = false;
         for mask in 0..(1 << n_ops) {
             let mut ops = vec![];
             for i in 0..n_ops {
@@ -36,12 +35,9 @@ pub fn part1(input: &[(i64, Vec<i64>)]) -> i64 {
             }
             let val = evaluate_expression(nums, &ops);
             if val == *target {
-                possible = true;
+                total += target;
                 break;
             }
-        }
-        if possible {
-            total += target;
         }
     }
     total
@@ -71,8 +67,6 @@ pub fn part2(input: &[(i64, Vec<i64>)]) -> i64 {
         }
 
         let n_ops = nums.len() - 1;
-        let mut possible = false;
-
         for mask in 0..3_u32.pow(n_ops as u32) {
             let mut ops = vec![];
             let mut temp_mask = mask;
@@ -82,12 +76,9 @@ pub fn part2(input: &[(i64, Vec<i64>)]) -> i64 {
             }
             let val = evaluate_expression_concat(nums, &ops);
             if val == *target {
-                possible = true;
+                total += target;
                 break;
             }
-        }
-        if possible {
-            total += target;
         }
     }
     total
