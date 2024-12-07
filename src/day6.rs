@@ -2,10 +2,10 @@ use std::collections::HashSet;
 
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub enum Direction {
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT,
+    Up,
+    Down,
+    Left,
+    Right,
 }
 
 #[derive(Debug)]
@@ -27,17 +27,17 @@ pub fn input_generator(input: &str) -> Map {
 
     let mut start_x = 0;
     let mut start_y = 0;
-    let mut start_direction = Direction::UP;
+    let mut start_direction = Direction::Up;
     for (i, row) in grid.iter().enumerate() {
         for (j, c) in row.iter().enumerate() {
             if *c != '.' && *c != '#' {
                 start_x = j;
                 start_y = i;
                 start_direction = match *c {
-                    '^' => Direction::UP,
-                    '>' => Direction::RIGHT,
-                    'v' => Direction::DOWN,
-                    '<' => Direction::LEFT,
+                    '^' => Direction::Up,
+                    '>' => Direction::Right,
+                    'v' => Direction::Down,
+                    '<' => Direction::Left,
                     _ => unreachable!(),
                 };
                 break;
@@ -70,10 +70,10 @@ pub fn part1(map: &Map) -> usize {
         visited.insert((x, y));
 
         let (fx, fy) = match curr_direction {
-            Direction::UP => (x, y - 1),
-            Direction::DOWN => (x, y + 1),
-            Direction::LEFT => (x - 1, y),
-            Direction::RIGHT => (x + 1, y),
+            Direction::Up => (x, y - 1),
+            Direction::Down => (x, y + 1),
+            Direction::Left => (x - 1, y),
+            Direction::Right => (x + 1, y),
         };
 
         if fx < 0 || fx >= map.width as i32 || fy < 0 || fy >= map.height as i32 {
@@ -82,10 +82,10 @@ pub fn part1(map: &Map) -> usize {
 
         if map.grid[fy as usize][fx as usize] == '#' {
             curr_direction = match curr_direction {
-                Direction::UP => Direction::RIGHT,
-                Direction::RIGHT => Direction::DOWN,
-                Direction::DOWN => Direction::LEFT,
-                Direction::LEFT => Direction::UP,
+                Direction::Up => Direction::Right,
+                Direction::Right => Direction::Down,
+                Direction::Down => Direction::Left,
+                Direction::Left => Direction::Up,
             };
         } else {
             x = fx;
@@ -107,34 +107,34 @@ pub fn part1old(map: &Map) -> usize {
         let (i, j) = (y as usize, x as usize);
         if map.grid[i][j] == '#' {
             match curr_direction {
-                Direction::UP => {
+                Direction::Up => {
                     x += 1;
                     y += 1;
-                    curr_direction = Direction::RIGHT;
+                    curr_direction = Direction::Right;
                 }
-                Direction::RIGHT => {
+                Direction::Right => {
                     x -= 1;
                     y += 1;
-                    curr_direction = Direction::DOWN;
+                    curr_direction = Direction::Down;
                 }
-                Direction::DOWN => {
+                Direction::Down => {
                     x -= 1;
                     y -= 1;
-                    curr_direction = Direction::LEFT;
+                    curr_direction = Direction::Left;
                 }
-                Direction::LEFT => {
+                Direction::Left => {
                     x += 1;
                     y -= 1;
-                    curr_direction = Direction::UP;
+                    curr_direction = Direction::Up;
                 }
             }
         }
         visited.insert((x, y));
         match curr_direction {
-            Direction::UP => y -= 1,
-            Direction::DOWN => y += 1,
-            Direction::LEFT => x -= 1,
-            Direction::RIGHT => x += 1,
+            Direction::Up => y -= 1,
+            Direction::Down => y += 1,
+            Direction::Left => x -= 1,
+            Direction::Right => x += 1,
         }
     }
 
@@ -166,10 +166,10 @@ pub fn part2(map: &Map) -> usize {
                 }
 
                 let (fx, fy) = match curr_direction {
-                    Direction::UP => (x, y - 1),
-                    Direction::DOWN => (x, y + 1),
-                    Direction::LEFT => (x - 1, y),
-                    Direction::RIGHT => (x + 1, y),
+                    Direction::Up => (x, y - 1),
+                    Direction::Down => (x, y + 1),
+                    Direction::Left => (x - 1, y),
+                    Direction::Right => (x + 1, y),
                 };
 
                 if fx < 0 || fx >= map.width as i32 || fy < 0 || fy >= map.height as i32 {
@@ -180,10 +180,10 @@ pub fn part2(map: &Map) -> usize {
                     || (fy as usize == oy && fx as usize == ox)
                 {
                     curr_direction = match curr_direction {
-                        Direction::UP => Direction::RIGHT,
-                        Direction::RIGHT => Direction::DOWN,
-                        Direction::DOWN => Direction::LEFT,
-                        Direction::LEFT => Direction::UP,
+                        Direction::Up => Direction::Right,
+                        Direction::Right => Direction::Down,
+                        Direction::Down => Direction::Left,
+                        Direction::Left => Direction::Up,
                     };
                 } else {
                     x = fx;

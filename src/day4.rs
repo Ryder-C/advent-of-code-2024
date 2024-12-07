@@ -28,11 +28,7 @@ pub fn part1(grid: &[Vec<char>]) -> i32 {
                 let mut x = i;
                 let mut y = j;
                 while k < word.len() {
-                    if x < 0
-                        || x >= n
-                        || y < 0
-                        || y >= m
-                        || grid[x as usize][y as usize] != word[k as usize]
+                    if x < 0 || x >= n || y < 0 || y >= m || grid[x as usize][y as usize] != word[k]
                     {
                         break;
                     }
