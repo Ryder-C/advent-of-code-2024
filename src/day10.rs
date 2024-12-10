@@ -15,9 +15,9 @@ pub fn part1(grid: &[Vec<u8>]) -> usize {
     let directions = [(0, 1), (0, -1), (1, 0), (-1, 0)];
 
     let mut trailheads = vec![];
-    for i in 0..m {
-        for j in 0..n {
-            if grid[i][j] == 0 {
+    for (i, row) in grid.iter().enumerate().take(m) {
+        for (j, height) in row.iter().enumerate().take(n) {
+            if *height == 0 {
                 trailheads.push((i, j));
             }
         }
@@ -62,9 +62,9 @@ pub fn part2(grid: &[Vec<u8>]) -> usize {
     let directions = [(0, 1), (0, -1), (1, 0), (-1, 0)];
 
     let mut trailheads = vec![];
-    for i in 0..m {
-        for j in 0..n {
-            if grid[i][j] == 0 {
+    for (i, row) in grid.iter().enumerate().take(m) {
+        for (j, height) in row.iter().enumerate().take(n) {
+            if *height == 0 {
                 trailheads.push((i, j));
             }
         }
