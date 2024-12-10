@@ -35,12 +35,7 @@ pub fn part1(input: &[u8]) -> usize {
         }
     }
 
-    loop {
-        let left_free = match blocks.iter().position(|b| b.is_none()) {
-            Some(pos) => pos,
-            None => break,
-        };
-
+    while let Some(left_free) = blocks.iter().position(|b| b.is_none()) {
         let right_file = match blocks.iter().rposition(|b| b.is_some()) {
             Some(pos) => {
                 if pos > left_free {
@@ -100,13 +95,12 @@ pub fn part2(input: &[u8]) -> usize {
 
         if let Some((dst_start, dst_end)) = find_free(&blocks, file_len, start) {
             let mut file_blocks = Vec::with_capacity(file_len);
-            for i in start..=end {
-                file_blocks.push(blocks[i].take());
+            for block in blocks.iter_mut().take(end + 1).skip(start) {
+                file_blocks.push(block.take());
             }
 
-            for i in dst_start..=dst_end {
-                blocks[i] = file_blocks[i - dst_start];
-            }
+            blocks[dst_start..(dst_end + 1)]
+                .copy_from_slice(&file_blocks[..((dst_end - dst_start) + 1)]);
 
             positions[id] = (dst_start, dst_end);
         }
@@ -120,7 +114,7 @@ pub fn part2(input: &[u8]) -> usize {
     checksum
 }
 
-fn file_positions(blocks: &Vec<Option<usize>>) -> Vec<(usize, usize)> {
+fn file_positions(blocks: &[Option<usize>]) -> Vec<(usize, usize)> {
     let mut positions = vec![];
     let max_id = blocks.iter().filter_map(|b| *b).max().unwrap_or(0);
     for id in 0..=max_id {
@@ -138,24 +132,22 @@ fn file_positions(blocks: &Vec<Option<usize>>) -> Vec<(usize, usize)> {
 }
 
 fn find_free(
-    blocks: &Vec<Option<usize>>,
+    blocks: &[Option<usize>],
     file_len: usize,
     file_start: usize,
 ) -> Option<(usize, usize)> {
     let mut seg_start = None;
-    for i in 0..file_start {
-        if blocks[i].is_none() {
+    for (i, block) in blocks.iter().enumerate().take(file_start) {
+        if block.is_none() {
             if seg_start.is_none() {
                 seg_start = Some(i);
             }
-        } else {
-            if let Some(s) = seg_start {
-                let len = i - s;
-                if len >= file_len {
-                    return Some((s, s + file_len - 1));
-                }
-                seg_start = None;
+        } else if let Some(s) = seg_start {
+            let len = i - s;
+            if len >= file_len {
+                return Some((s, s + file_len - 1));
             }
+            seg_start = None;
         }
     }
 
